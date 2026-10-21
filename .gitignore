@@ -1,33 +1,23 @@
-# Gradle files
-.gradle/
-build/
-
-# Local configuration file (sdk path, etc)
-local.properties
-
-# Log/OS Files
-*.log
-
-# Android Studio generated files and folders
-captures/
-.externalNativeBuild/
-.cxx/
+# Build output (launcher/build.sh)
+launcher/build/
 *.apk
-output.json
+*.idsig
+*.dex
 
-# IntelliJ
-*.iml
-.idea/
-misc.xml
-deploymentTargetDropDown.xml
-render.experimental.xml
+# Release APKs belong in GitHub Releases, not the repo
+dist/
 
-# Keystore files
-*.jks
+# Signing keys: never publish these
 *.keystore
+*.jks
 
-# Google Services (e.g. APIs or Firebase)
-google-services.json
+# TV snapshots from scripts/checkpoint.sh (device info, settings, pulled APKs)
+tv-checkpoint-*/
 
-# Android Profiling
-*.hprof
+# Local tooling and OS files
+.claude/
+.idea/
+*.iml
+local.properties
+*.log
+.DS_Store
