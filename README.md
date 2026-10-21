@@ -35,6 +35,12 @@ There's also **Idiots**, where a German shepherd and a Bengal cat chase each oth
 
 ![Idiots theme: Tofu rides on Moose, jumps into the cat tree and both fall asleep](docs/screenshots/idiots-story.gif)
 
+### Moving around
+
+Opening All apps from the corner controls swings the list in, and Back swings it away again:
+
+![Opening All apps from Home and going back](docs/screenshots/all-apps-transition.gif)
+
 ### Sources and All apps
 
 | | |
@@ -42,7 +48,7 @@ There's also **Idiots**, where a German shepherd and a Bengal cat chase each oth
 | ![Sources tab with HDMI inputs named Apple TV, PlayStation 5, PlayStation 4 and Xbox](docs/screenshots/sources-halloween.png) | ![All apps, with Apple TV apps listed first](docs/screenshots/all-apps.png) |
 | **Sources:** every HDMI input by name, with brand icons | **All apps:** Android apps and apps from a linked Apple TV |
 
-The Sources, All apps, Halloween and Idiots images were captured on the TV. Light, Night, Pink, Blue Sky and Flowers were captured in an Android emulator, which has no HDMI inputs, so they show the Apps tab with the emulator's apps. The navigation, Halloween and Idiots animations are stitched from TV screenshots, so they're choppier than the real thing.
+The Sources, All apps, Halloween and Idiots images were captured on the TV. Light, Night, Pink, Blue Sky, Flowers and the All apps transition were captured in an Android emulator, which has no HDMI inputs, so they show the Apps tab with the emulator's apps. The navigation, Halloween and Idiots animations are stitched from TV screenshots, so they're choppier than the real thing.
 
 ## Requirements
 
@@ -103,6 +109,12 @@ The Sources tab lists HDMI 1–4 in port order. Each input is named, in order of
 1. On Sources, select the input your Apple TV is plugged into and press Menu → **Link Apple TV apps**.
 2. Pick your Apple TV from the list Home finds on the network, then type the code the Apple TV shows.
 3. Its apps now appear in All apps, where you can pin them like any other app.
+
+| 1. Search | 2. Type the code | 3. Link |
+|---|---|---|
+| ![Link Apple TV screen looking for Apple TVs on the network](docs/screenshots/pair-1-search.png) | ![Code entry screen for the Apple TV called Living Room](docs/screenshots/pair-2-code.png) | ![Linking screen while Home pairs with the Apple TV](docs/screenshots/pair-3-linking.png) |
+
+These pairing screens were captured in an emulator against a stand-in Apple TV. That is why the Apple TV is called "Living Room".
 
 Opening an Apple TV app switches the TV to that input and launches the app on the Apple TV. The same menu offers **Refresh Apple TV apps** and **Unlink**, or moves the Apple TV to a different input. Home appears as "Home" in the Apple TV's list of remotes. For debugging, run `adb logcat -s CalmOS-ATV`.
 
@@ -172,7 +184,7 @@ CalmOS/
 
 ## About the TV
 
-- This build was made for the **Toshiba 65UA2B63DB** (a Vestel "Cosmos" board running Android TV 11, build RTOC.251019.001).
+- This build was made for the **Toshiba 65UA2B63DB** (a Vestel "Cosmos" board running Android TV 11, build RTOC.251019.001). Point your agent at the repo to build for your specific hardware.
 - The stock home app is `com.google.android.tvlauncher`. Live TV is handled by `com.mediatek.wwtv.tvcenter`.
 - Play Protect blocks sideloaded apps that target old SDKs, so Home targets SDK 35 and declares `QUERY_ALL_PACKAGES`.
 
