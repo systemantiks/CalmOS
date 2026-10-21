@@ -4,7 +4,7 @@ A quiet, debloated Android TV. CalmOS replaces the stock Google TV launcher with
 
 Home can also link to an Apple TV over Apple's Companion protocol, the one the Remote in an iPhone's Control Centre uses. Your Apple TV's apps then appear alongside the Android ones, and opening one switches the TV to the Apple TV's input and launches the app there.
 
-![Home on the Idiots theme: Tofu rides on Moose, jumps into the cat tree and both fall asleep](docs/screenshots/idiots-story.gif)
+![Moving between the Sources tab (Apple TV, PlayStation 5, PlayStation 4, Xbox) and the Apps tab](docs/screenshots/navigation.gif)
 
 It was built for a Toshiba 65UA2B63DB (a Vestel Android TV 11 board, which Vestel codenames "cosmos"), but the launcher itself runs on any Android TV from Android 6 (API 23) up.
 
@@ -20,20 +20,29 @@ It was built for a Toshiba 65UA2B63DB (a Vestel Android TV 11 board, which Veste
 
 ## Screenshots
 
+### Themes
+
 | | |
 |---|---|
-| ![Sources tab with HDMI inputs named Apple TV, PlayStation 5, PlayStation 4 and Xbox](docs/screenshots/sources-idiots.png) | ![Apps tab with pinned apps while the pets sleep](docs/screenshots/apps-idiots.png) |
-| **Sources:** every HDMI input by name, with brand icons | **Apps:** your pinned apps in big type |
-| ![All apps, with Apple TV apps listed first](docs/screenshots/all-apps.png) | ![Sources on the Halloween theme with pumpkins and a spider](docs/screenshots/sources-halloween.png) |
-| **All apps:** Android apps and apps from a linked Apple TV | **Halloween:** pumpkins, webs and a spider |
+| ![Apps tab on the Light theme](docs/screenshots/theme-light.png) | ![Apps tab on the Night theme](docs/screenshots/theme-night.png) |
+| **Light** | **Night** |
+| ![Apps tab on the Pink theme](docs/screenshots/theme-pink.png) | ![Apps tab on the Blue Sky theme with drifting pixel clouds](docs/screenshots/theme-sky.gif) |
+| **Pink** | **Blue Sky:** clouds drift across a pixel-art sky |
+| ![Apps tab on the Flowers theme with a swaying pixel meadow](docs/screenshots/theme-flowers.gif) | ![Sources on the Halloween theme with pumpkins and a spider](docs/screenshots/halloween.gif) |
+| **Flowers:** a pixel meadow sways in the wind | **Halloween:** pumpkins, webs and a spider |
 
-The themes animate on the TV:
+There's also **Idiots**, where a German shepherd and a Bengal cat chase each other and nap:
 
-| Idiots: the chase | Halloween: the spider |
+![Idiots theme: Tofu rides on Moose, jumps into the cat tree and both fall asleep](docs/screenshots/idiots-story.gif)
+
+### Sources and All apps
+
+| | |
 |---|---|
-| ![Moose and Tofu chasing each other, then resting in their beds](docs/screenshots/idiots-chase.gif) | ![The spider lowering itself on its thread](docs/screenshots/halloween.gif) |
+| ![Sources tab with HDMI inputs named Apple TV, PlayStation 5, PlayStation 4 and Xbox](docs/screenshots/sources-halloween.png) | ![All apps, with Apple TV apps listed first](docs/screenshots/all-apps.png) |
+| **Sources:** every HDMI input by name, with brand icons | **All apps:** Android apps and apps from a linked Apple TV |
 
-These animations are stitched from screenshots taken on the TV, so they are slower and choppier than the real thing.
+The Sources, All apps, Halloween and Idiots images were captured on the TV. Light, Night, Pink, Blue Sky and Flowers were captured in an Android emulator, which has no HDMI inputs, so they show the Apps tab with the emulator's apps. The navigation, Halloween and Idiots animations are stitched from TV screenshots, so they're choppier than the real thing.
 
 ## Requirements
 
@@ -96,6 +105,8 @@ The Sources tab lists HDMI 1–4 in port order. Each input is named, in order of
 3. Its apps now appear in All apps, where you can pin them like any other app.
 
 Opening an Apple TV app switches the TV to that input and launches the app on the Apple TV. The same menu offers **Refresh Apple TV apps** and **Unlink**, or moves the Apple TV to a different input. Home appears as "Home" in the Apple TV's list of remotes. For debugging, run `adb logcat -s CalmOS-ATV`.
+
+> **Note:** if your Apple TV has learned your TV remote it can lead to duplicated input across the TV launcher and the ATV. It's advised to unlink the learned TV remote if you're not using the ATV remote as default.
 
 ### Themes
 
@@ -161,7 +172,7 @@ CalmOS/
 
 ## About the TV
 
-- The firmware is Vestel's, with patch level August 2025. Replacing the OS isn't viable: the bootloader is locked, there's no public device tree, the firmware is matched to the panel, and you'd lose Widevine L1.
+- This build was made for the **Toshiba 65UA2B63DB** (a Vestel "Cosmos" board running Android TV 11, build RTOC.251019.001).
 - The stock home app is `com.google.android.tvlauncher`. Live TV is handled by `com.mediatek.wwtv.tvcenter`.
 - Play Protect blocks sideloaded apps that target old SDKs, so Home targets SDK 35 and declares `QUERY_ALL_PACKAGES`.
 
