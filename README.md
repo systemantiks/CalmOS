@@ -4,6 +4,8 @@ A quiet, debloated Android TV. CalmOS replaces the stock Google TV launcher with
 
 Home can also link to an Apple TV over Apple's Companion protocol, the one the Remote in an iPhone's Control Centre uses. Your Apple TV's apps then appear alongside the Android ones, and opening one switches the TV to the Apple TV's input and launches the app there.
 
+![Home on the Idiots theme: Tofu rides on Moose, jumps into the cat tree and both fall asleep](docs/screenshots/idiots-story.gif)
+
 It was built for a Toshiba 65UA2B63DB (a Vestel Android TV 11 board, which Vestel codenames "cosmos"), but the launcher itself runs on any Android TV from Android 6 (API 23) up.
 
 ## Features
@@ -15,6 +17,23 @@ It was built for a Toshiba 65UA2B63DB (a Vestel Android TV 11 board, which Veste
 - **Brand and custom icons.** PlayStation, Xbox, Nintendo, Apple and laptop icons are built in, and you can push your own PNG, JPG or WebP files. Single-colour icons are tinted to the theme.
 - **Reversible debloating.** Every script change can be undone, and `checkpoint.sh` snapshots the TV's packages and settings before anything changes.
 - **No dependencies.** Plain Java against the Android framework: no AndroidX, no Gradle, no third-party libraries. The Apple TV crypto (SRP-6a, X25519, Ed25519, ChaCha20-Poly1305, HKDF) is implemented in-tree so it works on older TVs.
+
+## Screenshots
+
+| | |
+|---|---|
+| ![Sources tab with HDMI inputs named Apple TV, PlayStation 5, PlayStation 4 and Xbox](docs/screenshots/sources-idiots.png) | ![Apps tab with pinned apps while the pets sleep](docs/screenshots/apps-idiots.png) |
+| **Sources:** every HDMI input by name, with brand icons | **Apps:** your pinned apps in big type |
+| ![All apps, with Apple TV apps listed first](docs/screenshots/all-apps.png) | ![Sources on the Halloween theme with pumpkins and a spider](docs/screenshots/sources-halloween.png) |
+| **All apps:** Android apps and apps from a linked Apple TV | **Halloween:** pumpkins, webs and a spider |
+
+The themes animate on the TV:
+
+| Idiots: the chase | Halloween: the spider |
+|---|---|
+| ![Moose and Tofu chasing each other, then resting in their beds](docs/screenshots/idiots-chase.gif) | ![The spider lowering itself on its thread](docs/screenshots/halloween.gif) |
+
+These animations are stitched from screenshots taken on the TV, so they are slower and choppier than the real thing.
 
 ## Requirements
 
@@ -134,6 +153,7 @@ CalmOS/
 │   ├── res/                     Icon, banner, styles, brand logo vectors
 │   ├── assets/                  Inter fonts and theme sprite sheets
 │   └── artwork/                 Source SVGs and sprite generation prompts
+├── docs/screenshots/            Images used in this README
 ├── scripts/                     ADB scripts: install, debloat, checkpoint, restore
 ├── dist/                        Built APKs (git-ignored; publish them as releases)
 └── NOTES.md                     Package notes and debloat plan for the Vestel TV
