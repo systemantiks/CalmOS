@@ -50,26 +50,84 @@ Opening All apps from the corner controls swings the list in, and Back swings it
 
 The Sources, All apps, Halloween and Idiots images were captured on the TV. Light, Night, Pink, Blue Sky, Flowers and the All apps transition were captured in an Android emulator, which has no HDMI inputs, so they show the Apps tab with the emulator's apps. The navigation, Halloween and Idiots animations are stitched from TV screenshots, so they're choppier than the real thing.
 
-## Requirements
+## Install guide
 
-- An Android TV with **Developer options → USB debugging / Network debugging** turned on.
-- [`adb`](https://developer.android.com/tools/adb) on your computer (`brew install --cask android-platform-tools` on macOS).
-- To build from source: JDK 17 and the Android build tools (see [Build](#build)).
-- Optional: an Apple TV on the same network, for Apple TV apps.
+You need a computer on the same network as the TV. Everything happens over ADB, and every step can be undone.
 
-## Install
+### 1. Turn on debugging on the TV
 
-Build the APK first (see [Build](#build)), or download one from the Releases page and put it in `dist/` as `home-<version>.apk`.
+1. On the TV, open **Settings → Device Preferences → About** (on some TVs it's **Settings → System → About**).
+2. Select **Build** seven times until it says you're a developer.
+3. Go back to **Device Preferences → Developer options** and turn on **USB debugging**. If there's a separate **Network debugging** or **ADB over network** switch, turn that on too.
+4. Note the TV's IP address from **Settings → Network & Internet**, under your network.
+
+### 2. Install ADB on your computer
+
+- **macOS:** `brew install --cask android-platform-tools`
+- **Ubuntu/Debian:** `sudo apt install adb`
+- **Windows:** download the [SDK Platform Tools](https://developer.android.com/tools/releases/platform-tools) and add the folder to your `PATH`.
+
+### 3. Get the APK
+
+Either download `home-<version>.apk` from the Releases page and save it in `dist/`, or build it yourself (see [Build](#build)):
 
 ```sh
-adb connect <tv-ip>               # accept the debugging prompt on the TV
-export CALMOS_TV=<tv-ip>:5555     # or pass the address as the first argument to each script
-cd scripts && chmod +x *.sh
-./make-default.sh                 # installs the newest dist/home-*.apk, checkpoints, makes it the Home button
-./debloat.sh                      # optional: switches off the safe bloat list (see NOTES.md)
+git clone <this repo> CalmOS && cd CalmOS
+cd launcher && ./build.sh        # saves dist/home-<version>.apk
+cd ..
 ```
 
-Undo with `./make-default.sh --undo` or `./debloat.sh --undo`. To roll everything back to a checkpoint, use `./restore.sh <checkpoint-dir>`.
+### 4. Connect to the TV
+
+```sh
+adb connect <tv-ip>:5555
+```
+
+The first time, the TV asks whether to allow debugging from your computer. Tick **Always allow** and choose **OK**, then run `adb connect` again. `adb devices` should list the TV as `device`.
+
+### 5. Install Home and make it the Home button
+
+```sh
+export CALMOS_TV=<tv-ip>:5555    # or pass the address as the first argument to each script
+cd scripts && chmod +x *.sh
+./make-default.sh
+```
+
+This saves a checkpoint of the TV's packages, installs the newest `dist/home-*.apk`, switches off the stock Google TV launcher and the services that bring it back, and makes Home what the remote's Home button opens. Press Home on the remote to check.
+
+### 6. Optional: switch off the bloat
+
+```sh
+./debloat.sh            # telemetry, demo mode, ad channels and other clutter
+./debloat.sh --extra    # also Freeview Play catch-up, Chromecast and voice search
+```
+
+The lists are written for the Vestel firmware in [NOTES.md](NOTES.md). Review them before running the script on another TV.
+
+### 7. Optional: link your Apple TV
+
+On Home, go to **Sources**, select the Apple TV's input and press **Menu → Link Apple TV apps**. See [Apple TV apps](#apple-tv-apps) for the details.
+
+### Installing without the scripts
+
+If you'd rather do it by hand:
+
+```sh
+adb install -r dist/home-<version>.apk
+adb shell cmd package set-home-activity works.uncommon.home/.HomeActivity
+adb shell input keyevent KEYCODE_HOME
+```
+
+Some TVs bring the stock launcher back after a reboot. `make-default.sh` handles that by disabling it.
+
+### Undo
+
+- `./make-default.sh --undo` brings back the stock launcher.
+- `./debloat.sh --undo` re-enables everything the debloat script switched off.
+- `./restore.sh scripts/tv-checkpoint-<timestamp>` returns the TV's packages to a saved checkpoint.
+- To remove Home completely, run `adb uninstall works.uncommon.home` after `./make-default.sh --undo`.
+
+### Scripts
 
 | Script | What it does |
 |---|---|
@@ -80,8 +138,6 @@ Undo with `./make-default.sh --undo` or `./debloat.sh --undo`. To roll everythin
 | `restore.sh` | Returns packages to the state recorded in a checkpoint. |
 | `verify-apk.sh` | Refuses an APK that is missing its bundled logos or theme sprites. Used by the build and by `make-default.sh`. |
 | `test-themes.sh` | Runs the pet-animation tests on the desktop JVM. No TV needed. |
-
-The package notes behind the debloat lists are in [NOTES.md](NOTES.md). They are specific to the Vestel firmware, so review them before running the scripts on another TV.
 
 ## Using Home
 
