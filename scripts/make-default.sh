@@ -19,13 +19,15 @@ if [ "$UNDO" = 0 ] && [ -n "$APK" ] && [ -f "$APK" ]; then
   bash ./verify-apk.sh "$APK" || exit 1
 fi
 
-# The stock launcher, its fallback that re-enables it, Vestel's launcher
-# customiser, and the recommendations service that feeds its rows.
+# The stock launcher, its fallback that re-enables it, and the
+# recommendations service that feeds its rows.
 STOCK=(
   com.google.android.tvlauncher
   com.google.android.tungsten.setupwraith
-  com.google.android.leanbacklauncher.partnercustomizer
   com.google.android.tvrecommendations
+  # Not com.google.android.leanbacklauncher.partnercustomizer: it owns the
+  # tvlauncher.widget provider, and without it com.mediatek.tv.service crash-loops
+  # once the network is up, so every input goes to a black screen.
 )
 
 adb connect "$TV" >/dev/null

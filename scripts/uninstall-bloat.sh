@@ -22,8 +22,10 @@ REMOVE=(
   # The stock Google TV launcher and its helpers (Home replaces them)
   com.google.android.tvlauncher
   com.google.android.tungsten.setupwraith
-  com.google.android.leanbacklauncher.partnercustomizer
   com.google.android.tvrecommendations
+  # Not com.google.android.leanbacklauncher.partnercustomizer: it owns the
+  # tvlauncher.widget provider, and without it com.mediatek.tv.service crash-loops
+  # once the network is up, so every input goes to a black screen.
 
   # Ads, demo mode, telemetry and things nobody asked for
   com.cltv.fast                                # free channels with ads
